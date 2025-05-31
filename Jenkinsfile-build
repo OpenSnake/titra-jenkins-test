@@ -19,5 +19,19 @@ pipeline {
                 sh 'meteor build ./build-output'
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh 'meteor test --once --driver-package meteortesting:mocha'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Tests passed successfully.'
+        }
+        failure {
+            echo '❌ Tests failed.'
+        }
     }
 }
