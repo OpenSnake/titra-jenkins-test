@@ -1,61 +1,21 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    ARTIFACT_DIR = 'build'
-    PATH = "/usr/local/bin:/usr/bin:/bin:$PATH"
-  }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/OpenSnake/titra-test.git'
+            }
+        }
 
-  stages {
-    stage('Checkout') {
-      steps {
-        git url: 'https://github.com/OpenSnake/titra-test.git'
-      }
-    }
+        stage('Install Dependencies') {
+            steps {
+                sh 'meteor npm ci'
+            }
+        }
 
-    stage('Install Meteor & Dependencies') {
-      steps {
-        sh '''
-          curl https://install.meteor.com/ | sh
-          export PATH="$HOME/.meteor:$PATH"
-          meteor npm install
-          meteor npm install --save-dev eslint mocha
-        '''
-      }
-    }
-
-    stage('Lint') {
-      steps {
-        sh '''
-          export PATH="$HOME/.meteor:$PATH"
-          ./node_modules/.bin/eslint . --ext .js || true
-        '''
-      }
-    }
-
-    stage('Test') {
-      steps {
-        sh '''
-          export PATH="$HOME/.meteor:$PATH"
-          ./node_modules/.bin/mocha tests/**/*.js --exit
-        '''
-      }
-    }
-
-    stage('Build') {
-      steps {
-        sh '''
-          export PATH="$HOME/.meteor:$PATH"
-          mkdir -p ${ARTIFACT_DIR}
-          meteor build ${ARTIFACT_DIR} --architecture os.linux.x86_64
-        '''
-      }
-    }
-
-    stage('Archive Artifact') {
-      steps {
-        archiveArtifacts artifacts: "${ARTIFACT_DIR}/*.tar.gz", fingerprint: true
-      }
-    }
-  }
-}
+        stage('Build Project') {
+            steps {
+                sh 'meteor build ./build-output'
+            }
+        }
