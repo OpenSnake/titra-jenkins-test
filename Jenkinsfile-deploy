@@ -1,23 +1,27 @@
 pipeline {
-  agent any
+  agent ansible
 
   stages {
+    stage('Checkout') {
+        steps {
+          git 'https://github.com/OpenSnake/titra-test.git'
+            }
+        }
 
     stage('Download Artifact') {
       steps {
         copyArtifacts(
           projectName: 'build',
           selector: lastSuccessful(),
-          filter: 'titra.tar.gz',
-          target: 'artifacts/'
+          filter: 'build.tar.gz',
+          target: '.ansible/'
         )
-        sh 'ls artifacts/'
       }
     }
 
-    stage('Deploy/Test') {
+    stage('Deploy') {
       steps {
-        sh 'tar -xzf artifacts/titra.tar.gz'
+        sh 'ansible-playbook .ansible/playbook.yaml --vault-password-file secret_password'
       }
     }
 
