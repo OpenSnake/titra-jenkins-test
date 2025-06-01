@@ -38,6 +38,13 @@ pipeline {
                 sh 'meteor build .'
             }
         }
+
+        stage('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'build.tar.gz', fingerprint: true
+            }
+        }
+
     }
 
     post {
