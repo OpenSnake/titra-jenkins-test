@@ -17,7 +17,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'ansible-playbook .ansible/playbook.yaml --vault-password-file secret_password'
+        sh 'cd .ansible && ansible-playbook playbook.yaml --vault-password-file ../secret_password'
       }
     }
 
