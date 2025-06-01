@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+
+  stages {
+
+    stage('Download Artifact') {
+      steps {
+        copyArtifacts(
+          projectName: 'build',
+          selector: lastSuccessful(),
+          filter: 'titra.tar.gz',
+          target: 'artifacts/'
+        )
+        sh 'ls artifacts/'
+      }
+    }
+
+    stage('Deploy/Test') {
+      steps {
+        sh 'tar -xzf artifacts/titra.tar.gz'
+      }
+    }
+
+  }
+}
