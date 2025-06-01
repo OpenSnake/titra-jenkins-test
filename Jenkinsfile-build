@@ -35,7 +35,7 @@ pipeline {
 
         stage('Run build') {
             steps {
-                sh 'meteor build ../titra.tar.gz'
+                sh 'meteor build ../'
             }
         }
     }
