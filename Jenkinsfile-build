@@ -15,11 +15,13 @@ pipeline {
         }
 
         stage('Run linting') {
-            script {
-              try {
-                sh 'meteor npx eslint . --fix'
-              } catch (err) {
-                echo "Linting failed, but we are moving on"
+            steps {
+                script {
+                  try {
+                    sh 'meteor npx eslint . --fix'
+                  } catch (err) {
+                    echo "Linting failed, but we are moving on"
+                    }
                 }
             }
         }
