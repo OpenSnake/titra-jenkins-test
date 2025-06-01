@@ -11,7 +11,7 @@ pipeline {
     stage('Download Artifact') {
       steps {
         sh 'sudo cp ../../secret_password secret_password'
-        sh 'sudo cp ../build.tar.gz .ansible/titra.tar.gz'
+        sh 'sudo cp ../titra.tar.gz .ansible/titra.tar.gz'
       }
     }
 
