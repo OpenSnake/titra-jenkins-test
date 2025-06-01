@@ -1,20 +1,16 @@
 pipeline {
-  agent ansible
+  agent node
 
   stages {
     stage('Checkout') {
         steps {
-          git 'https://github.com/OpenSnake/titra-test.git'
+          git 'https://github.com/OpenSnake/titra.git'
             }
         }
 
     stage('Download Artifact') {
       steps {
-        copyArtifacts(
-          projectName: 'build',
-          selector: lastSuccessful(),
-          filter: 'build.tar.gz',
-          target: '.ansible/'
+        sh 'cp ../build.tar.gz .ansible/titra.tar.gz'
         )
       }
     }
