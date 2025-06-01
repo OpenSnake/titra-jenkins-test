@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 git 'https://github.com/OpenSnake/titra.git'
@@ -46,5 +47,6 @@ pipeline {
         failure {
             echo '❌ Continuous Integration has not been successfully completed'
         }
+
     }
 }
