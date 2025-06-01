@@ -35,13 +35,15 @@ pipeline {
 
         stage('Run build') {
             steps {
-                sh 'meteor build ../'
+                sh 'meteor build ../output --directory'
+                sh 'tar -czf titra.tar.gz -C ../output .'
             }
         }
     }
 
     post {
         success {
+            archiveArtifacts artifacts: 'titra.tar.gz', fingerprint: true
             echo '✅ Continuous Integration completed successfully'
         }
         failure {
