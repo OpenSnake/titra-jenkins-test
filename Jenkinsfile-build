@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent node
 
     stages {
 
@@ -35,7 +35,7 @@ pipeline {
 
         stage('Run build') {
             steps {
-                sh 'meteor build ../'
+                sh 'meteor build .'
             }
         }
     }
