@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/OpenSnake/titra.git'
+                git 'https://github.com/OpenSnake/titra-test.git'
             }
         }
 
