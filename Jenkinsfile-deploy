@@ -10,6 +10,7 @@ pipeline {
 
     stage('Download Artifact') {
       steps {
+        sh 'cp ../../secret_password secret_password'
         sh 'cp ../build.tar.gz .ansible/titra.tar.gz'
       }
     }
